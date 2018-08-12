@@ -57,7 +57,7 @@ class QE_FRAMEWORK_LIBRARY_SHARED_EXPORT QEGenericButton :
                               VAR_DISV,        // DISV field of primary - set iff disableWhenRecordDisabled true
                               NUMBER_OF_VARIABLES };  // Maximum number of variables.
 
-    enum updateOptions { UPDATE_TEXT, UPDATE_ICON, UPDATE_TEXT_AND_ICON, UPDATE_STATE };
+    enum updateOptions { UPDATE_TEXT=0x1, UPDATE_ICON=0x2, UPDATE_TEXT_AND_ICON=0x3, UPDATE_STATE=0x4 };
 
 //    enum programStartupOptions { PSO_NONE,         // Just run the program
 //                                 PSO_TERMINAL,     // Run the program in a termainal

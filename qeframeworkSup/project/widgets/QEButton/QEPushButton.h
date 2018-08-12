@@ -500,18 +500,21 @@ public:
     /// Left justification is particularly useful when displaying quickly changing numeric data updates.
     Q_PROPERTY(Qt::Alignment alignment READ getTextAlignment WRITE setTextAlignment )
 
-    Q_ENUMS(UpdateOptions)
+    Q_FLAGS(UpdateOptions)
 
     /// Update options (text, pixmap, both, or state (checked or unchecked)
     ///
     Q_PROPERTY(UpdateOptions updateOption READ getUpdateOptionProperty WRITE setUpdateOptionProperty)
 
     /// User friendly enumerations for updateOption property - refer to QEGenericButton::updateOptions for details.
-    enum UpdateOptions { Text        = QEGenericButton::UPDATE_TEXT,           ///< Data updates will update the button text
-                         Icon        = QEGenericButton::UPDATE_ICON,           ///< Data updates will update the button icon
-                         TextAndIcon = QEGenericButton::UPDATE_TEXT_AND_ICON,  ///< Data updates will update the button text and icon
-                         State       = QEGenericButton::UPDATE_STATE           ///< Data updates will update the button state (checked or unchecked)
+    /// TextAndIcon can now be the OR of Text and Icon, the option is deprecated and left there for compatibility
+    /// with existing ui files.
+    enum UpdateOptionsEnum { Text        = QEGenericButton::UPDATE_TEXT,           ///< Data updates will update the button text
+                             Icon        = QEGenericButton::UPDATE_ICON,           ///< Data updates will update the button icon
+                             TextAndIcon = QEGenericButton::UPDATE_TEXT_AND_ICON,  ///< Data updates will update the button text and icon
+                             State       = QEGenericButton::UPDATE_STATE           ///< Data updates will update the button state (checked or unchecked)
                        };
+    Q_DECLARE_FLAGS(UpdateOptions, UpdateOptionsEnum)
 
     /// Pixmap to display if updateOption is Icon or TextAndIcon and data value translates to an index of 0
     ///
@@ -679,7 +682,7 @@ public:
 
 private:
     // Access function for updateOption property
-    void setUpdateOptionProperty( UpdateOptions updateOption ){ setUpdateOption( (QEPushButton::updateOptions)updateOption ); }
+    void setUpdateOptionProperty( UpdateOptions updateOption ){ setUpdateOption( (QEGenericButton::updateOptions)int(updateOption) ); }
     UpdateOptions getUpdateOptionProperty(){ return (UpdateOptions)getUpdateOption(); }
 
     // Access function for programStartupOptions property
